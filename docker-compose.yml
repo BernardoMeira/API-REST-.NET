@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  estoquedb:
+    image: mongo
+
+  produtoapi:
+    image: ${DOCKER_REGISTRY-}produtoapi
+    build:
+      context: .
+      dockerfile: ProdutoAPI/Dockerfile
+
+  fornecedorapi:
+    image: ${DOCKER_REGISTRY-}fornecedorapi
+    build:
+      context: .
+      dockerfile: FornecedorAPI/Dockerfile
+
+  vendasapi:
+    image: ${DOCKER_REGISTRY-}vendasapi
+    build:
+      context: .
+      dockerfile: VendasAPI/Dockerfile
+
+volumes:
+  mongo_data:

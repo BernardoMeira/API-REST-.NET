@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  estoquedb:
+    container_name: estoquedb
+    restart: always
+    ports:
+     - "27017:27017"
+    volumes:
+     - mongo_data:/data/db
+
+  produtoapi:
+    container_name: produtoapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=mongodb://estoquedb:27017"
+    depends_on:
+      - estoquedb
+    ports:
+      - "8000:80"
+
+  fornecedorapi:
+    container_name: fornecedorapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=mongodb://estoquedb:27017"
+    depends_on:
+     - estoquedb
+    ports:
+      - "8001:80"
+
+  vendasapi:
+    container_name: vendasapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=mongodb://estoquedb:27017"
+    depends_on:
+     - estoquedb
+    ports:
+      - "8002:80"
+
